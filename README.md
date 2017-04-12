@@ -6,3 +6,4 @@ Connect your Arduino like shown in the fritzing diagramm and flash with the sour
 TODO
 * Add hysterese
 * Add support for different sensors / transistors
+* Deepsleep when fan is off
