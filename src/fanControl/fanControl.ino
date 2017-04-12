@@ -10,11 +10,16 @@
 #define FAN_MID           106 //~5 V
 #define FAN_HIGH          255 //12 V
 
+#define DEBUG             true
+
 void setup()
 {
   //analog reference is 1.1V for TMP35
   analogReference(INTERNAL);
-  //Serial.begin(9600);
+
+  if (DEBUG) {
+    Serial.begin(9600);
+  }
 
   //Shut transistor
   pinMode(PIN_OUT_TRANSISTOR, OUTPUT);
@@ -42,8 +47,10 @@ void setFan() {
     newSpeed = FAN_HIGH;
   }
 
-  //Serial.println(currTemp);
-  //Serial.println(newSpeed);
+  if (DEBUG) {
+    Serial.println(currTemp);
+    Serial.println(newSpeed);
+  }
   analogWrite(PIN_OUT_TRANSISTOR, newSpeed);
 }
 
