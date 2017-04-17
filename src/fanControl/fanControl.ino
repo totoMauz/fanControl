@@ -1,7 +1,10 @@
+#include <LowPower.h>
+
 #define PIN_OUT_TRANSISTOR 11
 #define PIN_IN_TEMP         1
 #define DEBUG            true
 
+#define INTERVAL         2000
 #define HYSTERESE           3.0
 #define THRESHOLD_SLEEP    25.0
 
@@ -28,7 +31,7 @@ void setup()
 void loop()
 {
   setFan();
-  delay(1500);
+  delay(INTERVAL);
 }
 
 void setFan() {
@@ -71,11 +74,10 @@ byte getNewSpeed(float currTemp) {
 }
 
 void sleep() {
-  //TODO
   if (DEBUG) {
     Serial.println("Sleeping");
   }
-  currentState = 0;
+  LowPower.powerDown(SLEEP_2S, ADC_OFF, BOD_OFF);
 }
 
 float readTmp() {

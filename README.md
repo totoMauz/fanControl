@@ -3,5 +3,4 @@ Arduino code to use a thermal sensor and transistor to adjust voltage to a brush
 
 Connect your Arduino like shown in the fritzing diagramm and flash with the source code.
 
-TODO
-* Deepsleep when fan is off
+Use the constants to change used PINs, console output, update interval or temperature thresholds.
