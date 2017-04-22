@@ -1,15 +1,12 @@
-#include <LowPower.h>
-
 #define PIN_OUT_TRANSISTOR 11
 #define PIN_IN_TEMP         1
 #define DEBUG            true
 
 #define INTERVAL         2000
 #define HYSTERESE           3.0
-#define THRESHOLD_SLEEP    25.0
 
 //3.3 V, 5 V, 12 V
-const byte VOLTAGE[] = {70, 106, 255};
+const byte VOLTAGE[] = {0, 70, 106, 255};
 //°C
 const float THRESHOLD[] = {25.0, 30.0, 35.0};
 byte currentState = 0;
@@ -36,26 +33,20 @@ void loop()
 
 void setFan() {
   float currTemp = readTmp();
+  byte newSpeed = getNewSpeed(currTemp);
 
-  if (currTemp < THRESHOLD_SLEEP) {
-    sleep();
+  if (DEBUG) {
+    Serial.println(currTemp);
+    Serial.println(newSpeed);
   }
-  else {
-    byte newSpeed = getNewSpeed(currTemp);
 
-    if (DEBUG) {
-      Serial.println(currTemp);
-      Serial.println(newSpeed);
-    }
-
-    analogWrite(PIN_OUT_TRANSISTOR, newSpeed);
-  }
+  analogWrite(PIN_OUT_TRANSISTOR, newSpeed);
 }
 
 byte getNewSpeed(float currTemp) {
   byte newState;
   for (newState = 0; newState < 2; newState++) {
-    if (currTemp < THRESHOLD[newState + 1]) {
+    if (currTemp < THRESHOLD[newState]) {
       break;
     }
   }
@@ -71,13 +62,6 @@ byte getNewSpeed(float currTemp) {
   }
 
   return VOLTAGE[currentState];
-}
-
-void sleep() {
-  if (DEBUG) {
-    Serial.println("Sleeping");
-  }
-  LowPower.powerDown(SLEEP_2S, ADC_OFF, BOD_OFF);
 }
 
 float readTmp() {
