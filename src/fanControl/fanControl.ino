@@ -1,12 +1,12 @@
 #define PIN_OUT_TRANSISTOR 11
 #define PIN_IN_TEMP         1
-#define DEBUG            true
+#define DEBUG            false
 
 #define INTERVAL         2000
 #define HYSTERESE           3.0
 
 //3.3 V, 5 V, 12 V
-const byte VOLTAGE[] = {0, 70, 106, 255};
+const byte VOLTAGE[] = {0, 127, 191, 255};
 //°C
 const float THRESHOLD[] = {25.0, 30.0, 35.0};
 byte currentState = 0;
